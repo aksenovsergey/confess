@@ -79,6 +79,10 @@ var confess = {
                 largest, smallest, totalSize = 0,
                 missingSize = false,
                 elapsed = finish - start;
+		if (status !== 'success') {
+			console.log('Unable to load the address!');
+			phantom.exit(1);
+		}
 
             resources.forEach(function (resource) {
                 if (!resource.times.start) {
@@ -90,7 +94,9 @@ var confess = {
                 if (!fastest || resource.duration < fastest.duration) {
                     fastest = resource;
                 }
-                totalDuration += resource.duration;
+		if (resource.duration != '-'){
+			totalDuration += resource.duration;
+		}
 
                 if (resource.size) {
                     if (!largest || resource.size > largest.size) {
